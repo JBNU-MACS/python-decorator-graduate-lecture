@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/interactivecode.tsx","./src/components/mermaid.tsx","./src/content/chapters.tsx","./src/hooks/usepyodide.ts"],"version":"5.7.3"}

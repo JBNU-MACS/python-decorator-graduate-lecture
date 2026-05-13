@@ -1,80 +1,67 @@
 import { useState } from 'react';
 import type { FC } from 'react';
 import { usePyodide } from '../hooks/usePyodide';
-import { Play, RotateCcw } from 'lucide-react';
+import { Play, RotateCcw, Loader2 } from 'lucide-react';
 
-interface InteractiveCodeProps {
-  initialCode: string;
-}
-
-const InteractiveCode: FC<InteractiveCodeProps> = ({ initialCode }) => {
+export const InteractiveCode: FC<{ initialCode: string }> = ({ initialCode }) => {
   const [code, setCode] = useState(initialCode.trim());
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
   const { loading, runCode } = usePyodide();
 
   const handleRun = async () => {
-    setOutput('Running...');
+    setOutput('');
     setError(null);
     const result = await runCode(code);
     if (result.error) {
       setError(result.error);
-      setOutput('');
     } else {
-      setOutput(result.stdout || 'Process finished with no output');
+      setOutput(result.stdout || 'Done (no output)');
     }
   };
 
-  const handleReset = () => {
-    setCode(initialCode.trim());
-    setOutput('');
-    setError(null);
-  };
-
   return (
-    <div className="my-6 border rounded-lg overflow-hidden bg-slate-900 text-slate-100 shadow-xl">
-      <div className="flex items-center justify-between px-4 py-2 bg-slate-800 border-b border-slate-700">
-        <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">Python Sandbox</span>
+    <div className="my-8 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 shadow-2xl">
+      <div className="flex items-center justify-between px-4 py-3 bg-slate-800/50 border-b border-slate-800">
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-rose-500/80" />
+            <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+            <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+          </div>
+          <span className="ml-2 text-xs font-mono text-slate-500 uppercase tracking-widest">Python 3.12</span>
+        </div>
         <div className="flex gap-2">
           <button
-            onClick={handleReset}
-            className="p-1 hover:bg-slate-700 rounded transition-colors text-slate-400"
-            title="Reset Code"
+            onClick={() => { setCode(initialCode.trim()); setOutput(''); setError(null); }}
+            className="p-1.5 hover:bg-slate-700 rounded-lg text-slate-400 transition-colors"
           >
             <RotateCcw size={16} />
           </button>
           <button
             onClick={handleRun}
             disabled={loading}
-            className={`flex items-center gap-1 px-3 py-1 rounded text-sm font-medium transition-colors ${
-              loading 
-                ? 'bg-slate-700 text-slate-500 cursor-not-allowed' 
-                : 'bg-emerald-600 hover:bg-emerald-500 text-white'
-            }`}
+            className="flex items-center gap-2 px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white rounded-lg text-sm font-bold transition-all shadow-lg shadow-emerald-900/20"
           >
-            <Play size={14} />
-            {loading ? 'Loading...' : 'Run'}
+            {loading ? <Loader2 size={16} className="animate-spin" /> : <Play size={16} fill="currentColor" />}
+            {loading ? 'Loading...' : 'Execute'}
           </button>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-slate-700">
+      <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-800">
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
           spellCheck={false}
-          className="w-full md:w-1/2 p-4 bg-slate-900 font-mono text-sm resize-none focus:outline-none min-h-[200px]"
+          className="p-6 h-64 bg-transparent font-mono text-[13px] text-slate-300 focus:outline-none resize-none leading-relaxed"
         />
-        <div className="w-full md:w-1/2 p-4 bg-slate-950 font-mono text-sm min-h-[200px]">
-          <div className="text-slate-500 text-xs mb-2 uppercase select-none">Output:</div>
-          {error ? (
-            <pre className="text-rose-400 whitespace-pre-wrap">{error}</pre>
-          ) : (
-            <pre className="text-emerald-400 whitespace-pre-wrap">{output}</pre>
-          )}
+        <div className="p-6 h-64 bg-black/20 overflow-auto font-mono text-[13px]">
+          <div className="text-[10px] text-slate-600 uppercase font-bold mb-4 tracking-tighter">Console Output</div>
+          {error && <pre className="text-rose-400 whitespace-pre-wrap">{error}</pre>}
+          {output && <pre className="text-emerald-400 whitespace-pre-wrap">{output}</pre>}
+          {!error && !output && <span className="text-slate-700 italic">Output will appear here...</span>}
         </div>
       </div>
     </div>
   );
 };
-
-export default InteractiveCode;

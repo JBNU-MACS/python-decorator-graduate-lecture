@@ -4,15 +4,12 @@ import mermaid from 'mermaid';
 
 mermaid.initialize({
   startOnLoad: true,
-  theme: 'neutral',
+  theme: 'dark',
   securityLevel: 'loose',
+  fontFamily: 'Inter, sans-serif',
 });
 
-interface MermaidProps {
-  chart: string;
-}
-
-const Mermaid: FC<MermaidProps> = ({ chart }) => {
+export const Mermaid: FC<{ chart: string }> = ({ chart }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,10 +19,10 @@ const Mermaid: FC<MermaidProps> = ({ chart }) => {
   }, [chart]);
 
   return (
-    <div className="mermaid" ref={ref}>
-      {chart}
+    <div className="flex justify-center my-12 p-8 bg-slate-900/30 rounded-2xl border border-slate-800/50 shadow-inner">
+      <div className="mermaid" ref={ref}>
+        {chart}
+      </div>
     </div>
   );
 };
-
-export default Mermaid;
