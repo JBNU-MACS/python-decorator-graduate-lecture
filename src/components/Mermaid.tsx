@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import type { FC } from 'react';
 import mermaid from 'mermaid';
 
 mermaid.initialize({
@@ -11,7 +12,7 @@ interface MermaidProps {
   chart: string;
 }
 
-const Mermaid: React.FC<MermaidProps> = ({ chart }) => {
+const Mermaid: FC<MermaidProps> = ({ chart }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -24,7 +24,7 @@ export const usePyodide = () => {
           setLoading(false);
         };
         document.head.appendChild(script);
-      } catch (err) {
+      } catch {
         setError('Failed to load Pyodide');
         setLoading(false);
       }

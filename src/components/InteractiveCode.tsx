@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { FC } from 'react';
 import { usePyodide } from '../hooks/usePyodide';
 import { Play, RotateCcw } from 'lucide-react';
 
@@ -6,7 +7,7 @@ interface InteractiveCodeProps {
   initialCode: string;
 }
 
-const InteractiveCode: React.FC<InteractiveCodeProps> = ({ initialCode }) => {
+const InteractiveCode: FC<InteractiveCodeProps> = ({ initialCode }) => {
   const [code, setCode] = useState(initialCode.trim());
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);

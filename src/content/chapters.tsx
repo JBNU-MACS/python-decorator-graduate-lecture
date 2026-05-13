@@ -1,10 +1,11 @@
+import type { ReactNode } from 'react';
 import InteractiveCode from '../components/InteractiveCode';
 import Mermaid from '../components/Mermaid';
 
 export interface Chapter {
   id: string;
   title: string;
-  content: React.ReactNode;
+  content: ReactNode;
 }
 
 export const chapters: Chapter[] = [
