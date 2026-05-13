@@ -14,9 +14,8 @@ export const usePyodide = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        // Load pyodide from CDN
         const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js';
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.js';
         script.async = true;
         script.onload = async () => {
           const py = await window.loadPyodide();
@@ -36,7 +35,6 @@ export const usePyodide = () => {
     if (!pyodide) return { error: 'Pyodide not loaded' };
     
     try {
-      // Capture stdout
       pyodide.runPython(`
         import sys
         import io
