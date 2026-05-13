@@ -1,4 +1,3 @@
-import React from 'react';
 import InteractiveCode from '../components/InteractiveCode';
 import Mermaid from '../components/Mermaid';
 

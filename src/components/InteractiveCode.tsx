@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { usePyodide } from '../hooks/usePyodide';
 import { Play, RotateCcw } from 'lucide-react';
 

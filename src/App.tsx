@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { chapters } from './content/chapters';
 import { ChevronLeft, ChevronRight, Menu, BookOpen } from 'lucide-react';
 
