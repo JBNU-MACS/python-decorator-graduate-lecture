@@ -168,7 +168,7 @@ print(f"Annotations: {compute.__annotations__}")
         <p>
           How do we pass arguments to a decorator? By creating a function that returns a decorator. 
           This adds a third layer to our mental model: 
-          <code>Factory(args) -> Decorator(func) -> Wrapper(*args)</code>.
+          <code>Factory(args) {'->'} Decorator(func) {'->'} Wrapper(*args)</code>.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10">
